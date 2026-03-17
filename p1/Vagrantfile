@@ -7,8 +7,8 @@ MACHINES =
 
 Vagrant.configure("2") do |config|
   # same for both nodes
-  config.vm.box = "debian/bookworm64"
-  config.vm.boot_timeout = 600
+  config.vm.box = "koalephant/debian12"
+  #config.vm.box = "debian/bookworm64"
 
   MACHINES.each do |name, ip|
     config.vm.define name do |node|

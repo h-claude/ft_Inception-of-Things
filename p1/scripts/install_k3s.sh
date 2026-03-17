@@ -12,7 +12,7 @@ if [ "$1" = "hclaudeS" ]; then
 	#	--disable metrics-server
 
 	export K3S_KUBECONFIG_MODE="644"
-	export INSTALL_K3S_EXEC="server --node-external-ip=192.168.56.110 --bind-address=192.168.56.110 --flannel-iface=eth1"
+	export INSTALL_K3S_EXEC="server --node-external-ip=192.168.56.110 --bind-address=192.168.56.110"
 
 	curl -sfL https://get.k3s.io | sh -
 	if [ $? -ne 0 ]; then
@@ -35,6 +35,7 @@ if [ "$1" = "hclaudeS" ]; then
 	while [ ! -f /var/lib/rancher/k3s/server/node-token ]; do
 		sleep 2
 	done
+	sudo mkdir -p /vagrant/shared
 	sudo cp /var/lib/rancher/k3s/server/node-token /vagrant/shared/token
 	sudo chmod 644 /vagrant/shared/token
 elif [ "$1" = "hclaudeSW" ]; then
@@ -47,8 +48,8 @@ elif [ "$1" = "hclaudeSW" ]; then
 
 	export K3S_TOKEN_FILE=/vagrant/shared/token
 	export K3S_URL=https://192.168.56.110:6443
-	export INSTALL_K3S_EXEC="--flannel-iface=eth1"
-	
+	export INSTALL_K3S_EXEC="agent"
+
 	curl -sfL https://get.k3s.io | sh -
 
 	#curl -sfL https://get.k3s.io | K3S_URL=https://192.168.56.110:6443 sh -s - agent \
