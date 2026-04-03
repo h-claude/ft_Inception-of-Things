@@ -1,9 +1,5 @@
 #!/bin/bash
 
-#ufw allow 6443/tcp #apiserver
-#ufw allow from 10.42.0.0/16 to any #pods
-#ufw allow from 10.43.0.0/16 to any #services
-
 echo "Installing K3s Server..."
 
 export K3S_KUBECONFIG_MODE="644"
@@ -15,3 +11,6 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
+sudo k3s kubectl apply -f /vagrant/pages.yaml
+sudo k3s kubectl apply -f /vagrant/deployment.yaml
+sudo k3s kubectl get deploy,svc,pods,ingress -A
